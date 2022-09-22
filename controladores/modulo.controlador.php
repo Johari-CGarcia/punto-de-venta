@@ -16,7 +16,10 @@ class ModuloControlador{
         return $modulosPorPerfil;
 
     }
-    /**Se usa para el modulo de mantenimiento de modulos*/
+    
+    /*==============================================================
+    SE USA PARA EL MODULO DE MANTENIMIENTO DE MODULOS
+    ==============================================================*/
     static public function ctrObtenerModulosSistema(){
 
         $modulosSistema = ModuloModelo::mdlObtenerModulosSistema();
@@ -25,11 +28,24 @@ class ModuloControlador{
 
     }
 
+    /*==============================================================
+    FNC PARA REORGANIZAR LOS MODULOS DEL SISTEMA
+    ==============================================================*/
     static public function ctrReorganizarModulos($modulos_ordenados){
 
         $modulosOrdenados = ModuloModelo::mdlReorganizarModulos($modulos_ordenados);
 
         return $modulosOrdenados;
 
+    }
+
+    /*==============================================================
+    FNC PARA REGISTRAR MODULOS
+    ==============================================================*/
+    static public function ctrRegistrarModulo($data_modulo){
+
+        $registro_modulo = ModuloModelo::mdlRegistrarModulo($data_modulo);
+
+        return $registro_modulo;
     }
 }

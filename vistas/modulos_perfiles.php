@@ -131,38 +131,19 @@
 
                                             <div class="form-group mb-2">
 
-                                                <label class="col-form-label" for="iptModulo">
+                                                <label for="iptModulo" class="m-0 p-0 col-sm-12 col-form-label-sm"><span
+                                                        class="small">Módulo</span><span
+                                                        class="text-danger">*</span></label>
 
-                                                    <i class="fas fa-laptop fs-6"></i>
-
-                                                    <span class="small">Módulo</span><span class="text-danger">*</span>
-
-                                                </label>
-
-                                                <input type="text" class="form-control form-control-sm" id="iptModulo"
-                                                    name="iptModulo" placeholder="Ingrese el módulo" required>
-
-                                                <div class="invalid-feedback">Debe ingresar el módulo</div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-md-12">
-
-                                            <div class="form-group mb-2">
-
-                                                <label class="col-form-label" for="iptVistaModulo">
-
-                                                    <i class="fas fa-code fs-6"></i>
-
-                                                    <span class="small">Vista PHP</span>
-
-                                                </label>
-
-                                                <input type="text" class="form-control form-control-sm"
-                                                    id="iptVistaModulo" name="iptVistaModulo"
-                                                    placeholder="Ingrese la vista del módulo">
+                                                <div class="input-group  m-0">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        name="iptModulo" id="iptModulo" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text bg-info"><i
+                                                                class="fas fa-laptop text-white fs-6"></i></span>
+                                                    </div>
+                                                    <div class="invalid-feedback">Debe ingresar el módulo</div>
+                                                </div>
 
                                             </div>
 
@@ -172,19 +153,41 @@
 
                                             <div class="form-group mb-2">
 
-                                                <label class="col-form-label" for="iptIconoModulo">
+                                                <label for="iptVistaModulo"
+                                                    class="m-0 p-0 col-sm-12 col-form-label-sm"><span
+                                                        class="small">Vista PHP</span></label>
+                                                <div class="input-group  m-0">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        name="iptVistaModulo" id="iptVistaModulo">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text bg-info"><i
+                                                                class="fas fa-code text-white fs-6"></i></span>
+                                                    </div>
+                                                </div>
 
-                                                    <i class="fas fa-images fs-6"></i>
+                                            </div>
 
-                                                    <span class="small">Icono</span><span class="text-danger">*</span>
+                                        </div>
 
-                                                </label>
+                                        <div class="col-md-12">
 
-                                                <input type="text" class="form-control form-control-sm"
-                                                    id="iptIconoModulo" name="iptIconoModulo" value="far fa-circle"
-                                                    placeholder="Ingrese el ícono del módulo: far fa-circle" required>
+                                            <div class="form-group mb-2">
 
-                                                <div class="invalid-feedback">Debe ingresar el ícono del módulo</div>
+                                                <label for="iptIconoModulo"
+                                                    class="m-0 p-0 col-sm-12 col-form-label-sm"><span
+                                                        class="small">Icono</span><span
+                                                        class="text-danger">*</span></label>
+                                                <div class="input-group  m-0">
+                                                    <input type="text" placeholder="<i class='far fa-circle'></i>"
+                                                        name="iptIconoModulo" class="form-control form-control-sm"
+                                                        id="iptIconoModulo" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text bg-info" id="spn_icono_modulo"><i
+                                                                class="far fa-circle fs-6 text-white"></i></span>
+                                                    </div>
+                                                    <div class="invalid-feedback">Debe ingresar el ícono del módulo
+                                                    </div>
+                                                </div>
 
                                             </div>
 
@@ -382,7 +385,6 @@
 </div>
 
 <script>
-
 /* =============================================================
 VARIABLES GLOBALES
 ============================================================= */
@@ -560,16 +562,35 @@ $(document).ready(function() {
     /* =============================================================
     REORGANIZAR MODULOS DEL SISTEMA 
     ============================================================= */
-    $("#btnReordenarModulos").on('click', function(){
+    $("#btnReordenarModulos").on('click', function() {
         fnOrganizarModulos();
     })
 
     /* =============================================================
     REINICIALIZAR MODULOS DEL SISTEMA EN EL JSTREE 
     ============================================================= */
-    $("#btnReiniciar").on('click', function(){
+    $("#btnReiniciar").on('click', function() {
         //Recargamos árbol de módulos - MANTENIMIENTO MODULOS
         actualizarArbolModulos();
+    })
+
+    /*=============================================================
+        VISTA PREVIA DEL ICONO DE LA VISTA
+        ==============================================================*/
+    $("#iptIconoModulo").change(function() {
+
+        $("#spn_icono_modulo").html($("#iptIconoModulo").val())
+
+        if ($("#iptIconoModulo").val().length === 0) {
+            $("#spn_icono_modulo").html("<i class='far fa-circle fs-6 text-white'></i>")
+        }
+    })
+
+    /*===================================================================*/
+    //EVENTO QUE GUARDA LOS DATOS DEL MODULO
+    /*===================================================================*/
+    document.getElementById("btnRegistrarModulo").addEventListener("click", function() {
+        fnRegistrarModulo();
     })
 
 }) //FIN DOCUMENT READY
@@ -792,7 +813,7 @@ function registrarPerfilModulos(modulosSeleccionados, idPerfil, idModulo_inicio)
     });
 }
 
-function actualizarArbolModulosPerfiles(){
+function actualizarArbolModulosPerfiles() {
     $.ajax({
         async: false,
         url: 'ajax/modulo.ajax.php',
@@ -810,9 +831,9 @@ function actualizarArbolModulosPerfiles(){
     });
 }
 
-    /**=============================================================
-     * FUNCIONES PARA EL MANTENIMIENTO DE MODULOS
-     ==============================================================*/
+/**=============================================================
+ * FUNCIONES PARA EL MANTENIMIENTO DE MODULOS
+ ==============================================================*/
 function fnCargarArbolModulos() {
 
     var dataSource;
@@ -838,25 +859,25 @@ function fnCargarArbolModulos() {
     */
 
     $('#arbolModulos').jstree({
-        "core":{
+        "core": {
             "check_callback": true,
             "data": dataSource
         },
-        "types":{
-            "default":{
+        "types": {
+            "default": {
                 "icon": "fas fa-laptop"
             },
-            "file":{
+            "file": {
                 "icon": "fas fa-laptop"
             }
         },
         "plugins": ["types", "dnd"]
-    }).bind('ready.jstree', function(e,data){
+    }).bind('ready.jstree', function(e, data) {
         $('#arbolModulos').jstree('open_all')
     })
 }
 
-function actualizarArbolModulos(){
+function actualizarArbolModulos() {
     $.ajax({
         async: false,
         url: 'ajax/modulo.ajax.php',
@@ -872,17 +893,19 @@ function actualizarArbolModulos(){
     });
 }
 
-function fnOrganizarModulos(){
-    
+function fnOrganizarModulos() {
+
     var array_modulos = [];
 
     var reg_id, reg_padre_id, reg_orden;
-    
-    var v = $("#arbolModulos").jstree(true).get_json('#', {'flat':true});
+
+    var v = $("#arbolModulos").jstree(true).get_json('#', {
+        'flat': true
+    });
     //console.log("Esto es v", v)
 
 
-    for(i = 0; i < v.length; i++){
+    for (i = 0; i < v.length; i++) {
 
         var z = v[i];
         //console.log("Esto es z", z)
@@ -891,7 +914,7 @@ function fnOrganizarModulos(){
         reg_padre_id = z["parent"];
         reg_orden = i;
 
-        array_modulos[i] = reg_id + ';' + reg_padre_id + ';' + reg_orden; 
+        array_modulos[i] = reg_id + ';' + reg_padre_id + ';' + reg_orden;
     }
 
     //Registramos los modulos con el nuevo ordenamiento
@@ -905,8 +928,8 @@ function fnOrganizarModulos(){
         },
         dataType: 'json',
         success: function(respuesta) {
-            
-            if (respuesta > 0){
+
+            if (respuesta > 0) {
 
                 Swal.fire({
                     position: 'center',
@@ -921,7 +944,7 @@ function fnOrganizarModulos(){
                 //Recargamos árbol de módulos - MANTENIMIENTO MODULOS ASIGNADOS A PERFILES
                 actualizarArbolModulosPerfiles();
 
-            }else{
+            } else {
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
@@ -935,4 +958,75 @@ function fnOrganizarModulos(){
 
 }
 
+function fnRegistrarModulo() {
+
+    var forms = document.getElementsByClassName('needs-validation-registro-modulo');
+
+    var validation = Array.prototype.filter.call(forms, function(form) {
+
+        if (form.checkValidity() === true) {
+
+            console.log("Listo para registrar el modulo");
+
+            Swal.fire({
+                title: 'Está seguro de registrar el modulo?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, deseo registrarlo!',
+                cancelButtonText: 'Cancelar',
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    $("#iptIconoModulo").val($('#spn_icono_modulo i').attr('class'));
+
+                    $.ajax({
+                        async: false,
+                        url: "ajax/modulo.ajax.php",
+                        method: 'POST',
+                        data: {
+                            accion: 5,
+                            datos: $('#frm_registro_modulo').serialize()
+                        },
+                        dataType: 'json',
+                        success: function(respuesta) {
+
+                            console.log("🚀 ~ file: modulos_perfiles.php ~ line 1240 ~ validation ~ respuesta", respuesta)
+
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: respuesta,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                            tbl_modulos.ajax.reload();
+
+                            //recargamos arbol de modulos - MANTENIMIENTO MODULOS
+                            actualizarArbolModulos();
+
+                            //recargamos arbol de modulos - MANTENIMIENTO MODULOS ASIGNADOS A PERFILES                                
+                            actualizarArbolModulosPerfiles();
+
+                            $("#iptModulo").val("");
+                            $("#iptVistaModulo").val("");
+                            $("#iptIconoModulo").val("");
+
+                            $(".needs-validation-registro-modulo").removeClass("was-validated");
+                        }
+
+                    })
+
+                }
+            });
+
+        }
+
+        form.classList.add('was-validated');
+    })
+
+}
 </script>

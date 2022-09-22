@@ -26,7 +26,7 @@ class ModuloModelo{
                                                     IFNULL(case when (m.vista is null or m.vista = '') then '0' else (
                                                         (select '1' from perfil_modulo pm where pm.id_modulo = m.id and pm.id_perfil = :id_perfil)) end,0) as sel
                                                 from modulos m
-                                                order by m.id");
+                                                order by m.orden");
 
         $stmt -> bindParam(":id_perfil",$id_perfil,PDO::PARAM_INT);
 
@@ -36,7 +36,9 @@ class ModuloModelo{
 
     }
     
-    /**Se usa para el modulo de mantenimiento de modulos */
+     /*==============================================================
+    SE USA PARA EL MODULO DE MANTENIMIENTO DE MODULOS
+    ==============================================================*/
     static public function mdlObtenerModulosSistema(){
 
         $stmt = Conexion::conectar()->prepare("SELECT '' AS opciones,
@@ -55,7 +57,9 @@ class ModuloModelo{
 
     }
 
-    /**FNC PARA REORGANIZAR LOS MODULOS DEL SISTEMA*/
+    /*==============================================================
+    FNC PARA REORGANIZAR LOS MODULOS DEL SISTEMA
+    ==============================================================*/
     static public function mdlReorganizarModulos($modulos_ordenados){
         
         $total_registros = 0;
@@ -84,4 +88,47 @@ class ModuloModelo{
 
     }
 
+    /*==============================================================
+    FNC PARA REGISTRAR MODULOS
+    ==============================================================*/
+    static public function mdlRegistrarModulo($data_modulo){        
+
+        $date = date("Y-m-d H:i:s");      
+        
+        $stmt = Conexion::conectar()->prepare("SELECT max(orden)
+                                                FROM modulos m");
+
+        $stmt -> execute();
+
+        $orden = $stmt->fetch();
+
+        $orden = $orden[0] + 1;
+
+        $stmt = Conexion::conectar()->prepare("INSERT INTO modulos( modulo,
+                                                                    padre_id,
+                                                                    vista,
+                                                                    icon_menu,
+                                                                    fecha_creacion,
+                                                                    orden)
+                                                            values(:modulo,
+                                                                    0,
+                                                                    :vista,
+                                                                    :icon_menu,
+                                                                    :fecha_creacion,
+                                                                    :orden)");
+
+        $stmt -> bindParam(":modulo",$data_modulo["iptModulo"],PDO::PARAM_STR);
+
+        $stmt -> bindParam(":vista",$data_modulo["iptVistaModulo"],PDO::PARAM_STR);
+        $stmt -> bindParam(":icon_menu",$data_modulo["iptIconoModulo"],PDO::PARAM_STR);
+        $stmt -> bindParam(":fecha_creacion",$date,PDO::PARAM_STR);
+        $stmt -> bindParam(":orden",$orden,PDO::PARAM_INT);
+        
+        if($stmt->execute()){
+            return "Se registro correctamente";
+        }else{
+            return "Error al registrar";
+        }
+
+    }
 }
