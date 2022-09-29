@@ -396,7 +396,7 @@ $(document).ready(function() {
     FUNCIONES PARA LAS CARGAS INICIALES DE DATATABLES, ARBOL DE MODULOS Y REAJUSTE DE CABECERAS DE DATATABLES
     ============================================================= */
     cargarDataTables();
-    //ajustarHeadersDataTables($('#tblModulos')); para ocultar columna 7 y 8
+    ajustarHeadersDataTables($('#tblModulos')); /*para ocultar columna 7 y 8*/
     iniciarArbolModulos();
 
     /* =============================================================
@@ -684,7 +684,7 @@ function cargarDataTables() {
     });
 }
 
-/*function ajustarHeadersDataTables(element) {
+function ajustarHeadersDataTables(element) {
 
     var observer = window.ResizeObserver ? new ResizeObserver(function(entries) {
         entries.forEach(function(entry) {
@@ -700,7 +700,7 @@ function cargarDataTables() {
 
     // Initiate additional resize handling on datatable
     resizeHandler(element);
-}*/
+}
 
 function iniciarArbolModulos() {
 
