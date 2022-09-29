@@ -292,8 +292,8 @@
                                         <th>id Perfil</th>
                                         <th>Perfil</th>
                                         <th>Estado</th>
-                                        <!---<th>F. Creación</th>
-                                        <th>F. Actualización</th>---->
+                                        <th>F. Creación</th>
+                                        <th>F. Actualización</th>
                                         <th class="text-center">Opciones</th>
                                     </thead>
 
@@ -623,7 +623,7 @@ function cargarDataTables() {
                 }
             },
             {
-                targets: 3,
+                targets: 5,
                 sortable: false,
                 render: function(data, type, full, meta) {
                     return "<center>" +
